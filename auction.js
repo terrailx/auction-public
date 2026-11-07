@@ -939,6 +939,34 @@ function selectMapGroup(assets){
   $("asset-list").scrollTop=0;
 }
 
+function clusterCenter(bin) {
+  return bin.reduce((center,p)=>[
+    center[0]+p.point[0]/bin.length,center[1]+p.point[1]/bin.length
+  ],[0,0]);
+}
+
+function mergeOverlappingClusters(bins) {
+  const clusters=[];
+  for (const bin of bins) {
+    const joined=bin.slice();
+    let screen=map.project(clusterCenter(joined));
+    // Adjacent grid cells can have their actual centers on either side of the same edge.
+    for (let index=0;index<clusters.length;) {
+      const candidate=clusters[index];
+      if(Math.abs(screen.x-candidate.screen.x)>=44||Math.abs(screen.y-candidate.screen.y)>=44){
+        index++;
+        continue;
+      }
+      joined.push(...candidate.bin);
+      clusters.splice(index,1);
+      screen=map.project(clusterCenter(joined));
+      index=0;
+    }
+    clusters.push({bin:joined,screen});
+  }
+  return clusters.map(cluster=>cluster.bin);
+}
+
 function drawMarkers() {
   if(!map)return;
   for(const marker of markers)marker.remove();
@@ -953,10 +981,11 @@ function drawMarkers() {
     if(!bins.has(key))bins.set(key,[]);
     bins.get(key).push({point:p.point,assets});
   }
-  for(const bin of bins.values()){
+  const groups=map.getZoom()<14?mergeOverlappingClusters(bins.values()):bins.values();
+  for(const bin of groups){
     const assets=bin.flatMap(p=>p.assets), first=assets[0], event=first.cases[0];
     const cluster=bin.length>1, multiple=assets.length>1;
-    const point=bin.reduce((v,p)=>[v[0]+p.point[0]/bin.length,v[1]+p.point[1]/bin.length],[0,0]);
+    const point=clusterCenter(bin);
     const b=btn(null,e=>{
       e.stopPropagation();
       selectMapGroup(assets);
