@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko" data-hosted-archive data-public-archive>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>경매 사건 자료 · 보유물건 지도</title><meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/auction-public/maplibre-gl.css">
+<link rel="stylesheet" href="/auction-public/auction.css?v=public-archive-20261107">
+<link rel="stylesheet" href="/auction-public/property-font.css?v=public-archive-20261107">
+<script defer src="/auction-public/maplibre-gl.js"></script>
+<script defer src="/auction-public/kakao_map.js?v=public-archive-20261107"></script>
+<script defer src="/auction-public/auction-doctor.js?v=public-archive-20261107"></script>
+<script defer src="/auction-public/auction.js?v=public-archive-20261107"></script>
+</head>
+<body class="auction-map">
+<div class="arrival">
+  <picture id="auction-banner" aria-hidden="true">
+    <source type="image/avif" srcset="/auction-public/auction-atlas-640.avif 640w, /auction-public/auction-atlas-1280.avif 1280w, /auction-public/auction-atlas-2048.avif 2048w" sizes="100vw">
+    <img src="/auction-public/auction-atlas-1280.webp" srcset="/auction-public/auction-atlas-640.webp 640w, /auction-public/auction-atlas-1280.webp 1280w, /auction-public/auction-atlas-2048.webp 2048w" sizes="100vw" width="1280" height="427" fetchpriority="high" decoding="async" alt="">
+  </picture>
+  <header class="masthead">
+    <div class="frame heading"><a href="/auction-public/" class="brand">보유물건 지도</a><span class="crumb">/</span><strong>경매 사건 자료</strong></div>
+  </header>
+  <header class="frame intro">
+    <div class="atlas-title"><p class="eyebrow">물건 지도 / 사건 기록</p><h1>경매 사건 자료</h1><p>지도에서 물건을 고르고 연결된 사건의 저장 자료를 확인합니다.</p></div>
+    <dl class="counts"><div><dt>원본 물건 행</dt><dd id="asset-count">—</dd></div><div><dt>지도 연결 행</dt><dd id="pin-count">—</dd></div><div><dt>수집 사건</dt><dd id="case-count">—</dd></div></dl>
+    <span class="art-note">GPT 생성 이미지</span>
+  </header>
+</div>
+<main class="map-frame">
+  <div class="workspace">
+    <section class="map-panel" aria-label="물건 지도">
+      <div class="panelbar"><h2>물건 지도</h2><div class="map-tools"><div class="basemap-switch" role="group" aria-label="지도 종류"><button type="button" class="quiet" data-basemap="road" aria-pressed="true">지도</button><button type="button" class="quiet" data-basemap="sky" aria-pressed="false">스카이뷰</button></div><button type="button" id="toggle-3d" aria-pressed="false" class="quiet" disabled>3D 현장</button><button type="button" id="overview" class="quiet">전체 위치</button></div></div>
+      <div id="map"></div>
+      <div class="mapbar"><span><i class="sample active"></i>사건 표기</span><span><i class="sample"></i>그 외 물건</span><span id="map-status" role="status">지도 연결 중</span><span id="building-status" role="status" hidden></span></div>
+    </section>
+    <aside class="list-panel">
+      <div class="panelbar"><h2 id="list-title">물건 목록</h2><button type="button" id="clear-group" class="quiet" hidden>전체 목록</button></div>
+      <div class="switch" role="group" aria-label="자료 범위">
+        <button type="button" data-mode="cases" aria-pressed="true">사건 표기</button>
+        <button type="button" data-mode="all" aria-pressed="false">전체 물건</button>
+        <button type="button" data-mode="archive" aria-pressed="false">수집 사건</button>
+        
+      </div>
+      <label class="region-filter">지역 <select id="region"><option value="">전체 지역</option></select></label>
+      <p id="list-count" class="list-count"></p>
+      <section id="property" aria-label="선택한 물건" hidden></section>
+      <div id="asset-list" class="asset-list" aria-labelledby="list-title"></div>
+    </aside>
+  </div>
+  <footer id="footer">저장 자료 기준 · 2026.11.06</footer>
+</main>
+</body>
+</html>

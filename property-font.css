@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "Noto Sans KR";
+  src: url("/auction-public/NotoSansKR-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+}
+body, .paperhead h2, .map-pin, .title h1 {
+  font-family: "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+}
+
+html[data-hosted-archive] #nl-hud-frame {
+  display: none !important;
+}

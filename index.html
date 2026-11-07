@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko" data-hosted-archive data-public-archive><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>전국 보유물건 위성지도</title><meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="maplibre-gl.css"><link rel="stylesheet" href="/auction-public/map.css?v=public-archive-20261107">
+<link rel="stylesheet" href="/auction-public/property-font.css?v=public-archive-20261107">
+<script src="maplibre-gl.js" defer></script><script src="/auction-public/kakao_map.js?v=public-archive-20261107" defer></script><script src="/auction-public/map.js?v=public-archive-20261107" defer></script></head>
+<body><header class="top"><div class="title"><span class="crest" aria-hidden="true">⌖</span><div><p>전국 물건 공개 열람</p><h1>보유물건 위성지도</h1></div></div><div class="topmeta"><a href="/auction-public/auction/" class="auction-entry">경매 사건 자료 ↗</a><strong id="portfolioTotal">—</strong><div id="portfolioCoverage">자료 불러오는 중</div></div></header>
+<main><section id="stage" aria-label="보유물건 지도"><div id="map"></div>
+<div class="mapTools"><button id="overview" type="button">전체 위치</button><button id="road" type="button" aria-pressed="false">일반지도</button><button id="sky" type="button" aria-pressed="true">스카이뷰</button><button id="perspective" type="button" aria-pressed="false" disabled>3D 현장</button></div>
+<div id="mapStatus" role="status">전국 물건 원장 불러오는 중</div>
+<div class="legend"><span class="dot verified"></span> 위치 확인 <span class="dot candidate"></span> 주소 후보 <span id="mapProvider"></span></div>
+<section id="detail" hidden aria-label="선택한 물건 정보"></section>
+</section><aside class="panel" aria-label="물건 목록"><div class="panelHead"><div class="listTitle"><h2>지도 물건 목록</h2><span id="count" aria-live="polite">—</span></div>
+<p id="map-guide" class="map-guide">지도에서 지역을 누른 뒤 물건 핀을 선택하세요.</p>
+<details id="search-options"><summary>검색 및 조건 필터</summary>
+<label class="search"><span aria-hidden="true">⌕</span><input id="query" type="search" placeholder="단지 · 호실 · 평수 검색" aria-label="단지, 호실, 평수 검색"></label>
+<div class="filters"><select id="region" aria-label="지역"><option value="">전체 지역</option></select><select id="kind" aria-label="유형"><option value="">전체 유형</option></select><select id="certainty" aria-label="위치 근거"><option value="">위치 전체</option><option value="확인">위치 확인</option><option value="후보">주소 후보</option><option value="미확인">좌표 미확인</option></select><select id="case-link" aria-label="저장 사건"><option value="">저장 사건 전체</option><option value="linked">저장 사건 연결</option><option value="unlinked">저장 사건 미연결</option></select></div></details>
+</div><div id="list"></div>
+<footer>평수는 받은 자료 표기입니다. 3D 높이는 브이월드 건물 정보에 따르며, 높이 값이 없는 건물은 층당 3m로 표시합니다.</footer></aside></main>
+</body></html>
+
