@@ -707,7 +707,7 @@ function caseOverview(c, preview, event, allPhotos=false) {
   photos.append(photoHead);
   const gallery=node("div",null,"gallery");
   const files=c.status==="partial"||c.status==="verified"
-    ? c.sections.filter(s=>s.key==="detail"||s.key==="map").flatMap(s=>s.files).filter(f=>/^photo[_-]/i.test(f.name)) : [];
+    ? c.sections.filter(s=>s.key==="detail"||s.key==="map"||(publicArchive&&s.key==="court_docs")).flatMap(s=>s.files).filter(f=>/^photo[_-]/i.test(f.name)) : [];
   const addPhoto=f=>{
     const b=btn(null,()=>showFile(f,preview,true,null,null,true));b.setAttribute("aria-label",f.name+" 열기");
     b.append(photo(f.url,f.name,true));gallery.append(b);
