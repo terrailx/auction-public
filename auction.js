@@ -435,7 +435,7 @@ async function showDetail() {
         else content.push(node("p","이 사건에 연결된 지도 좌표가 없습니다.","empty"));
       }
       body.replaceChildren(...content,...visible.map(s=>section(s,preview)));
-      if(["history","service","land","planning"].includes(key)){
+      if(["history","service","land","planning"].includes(key)||(publicArchive&&key==="court_docs")){
         const transcript=visible[0]?.files.find(f=>f.type==="txt");
         if(transcript)showFile(transcript,preview,false,key,body);
       }
@@ -707,7 +707,7 @@ function caseOverview(c, preview, event, allPhotos=false) {
   photos.append(photoHead);
   const gallery=node("div",null,"gallery");
   const files=c.status==="partial"||c.status==="verified"
-    ? c.sections.filter(s=>s.key==="detail"||s.key==="map"||(publicArchive&&s.key==="court_docs")).flatMap(s=>s.files).filter(f=>/^photo[_-]/i.test(f.name)) : [];
+    ? c.sections.filter(s=>s.key==="detail"||s.key==="map"||(publicArchive&&s.key==="court_docs")).flatMap(s=>s.files).filter(f=>f.kind==="photo"||/^photo[_-]/i.test(f.name)) : [];
   const addPhoto=f=>{
     const b=btn(null,()=>showFile(f,preview,true,null,null,true));b.setAttribute("aria-label",f.name+" 열기");
     b.append(photo(f.url,f.name,true));gallery.append(b);
@@ -743,7 +743,7 @@ function comparison(s,preview,caseId) {
   }
   const shown=tables.reduce((n,t)=>n+t.rows.length,0);
   if(shown&&Number.isInteger(s.rows)&&shown!==s.rows)
-    panel.append(node("p","웹 표 "+shown+"행 · 수집 기록 "+s.rows+"행 · 원문에서 나머지를 확인할 수 있습니다.","case-meta"));
+    panel.append(node("p","웹 표 "+shown+"행 · 수집 기록 "+s.rows+"행","case-meta"));
   const textFiles=s.files.filter(f=>f.type==="txt"&&!tables.some(t=>t.file===f.name));
   for(const f of textFiles){
     const inline=node("div",null,"comparison-transcript");
@@ -753,7 +753,7 @@ function comparison(s,preview,caseId) {
       .then(text=>inline.lastChild.replaceWith(displayTranscript(text,null)))
       .catch(()=>{inline.lastChild.textContent="저장 원문을 불러오지 못했습니다.";});
   }
-  if(!s.files.length)panel.append(node("p",s.status==="no_result"?"수집 기록에 검색 결과가 없습니다.":"표시할 저장 원문이 없습니다.","comparison-empty"));
+  if(!s.files.length&&!tables.length)panel.append(node("p",s.status==="no_result"?"수집 기록에 검색 결과가 없습니다.":"표시할 저장 원문이 없습니다.","comparison-empty"));
   const original=section(s,preview);
   original.open=false;
   original.querySelector("summary").textContent="조회 범위 및 원본 자료 · "+(states[s.status]||s.status);
