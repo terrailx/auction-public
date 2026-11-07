@@ -258,7 +258,7 @@ function refreshMarkers() {
   for (const m of markers) m.remove();
   markers=[];
   const items=activeGroups();
-  const clustered=map.getZoom()<11.25;
+  const clustered=map.getZoom()<11.25&&!focusedUnits;
   function marker(p, el, offset=[0,0]) {
     if(kakaoView){
       el.style.transform="translate("+offset[0]+"px,"+offset[1]+"px)";
